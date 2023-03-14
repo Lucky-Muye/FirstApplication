@@ -5,6 +5,8 @@ import android.os.strictmode.IncorrectContextUseViolation
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -15,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -24,7 +27,10 @@ import com.example.myapplication.ui.theme.MyApplicationTheme
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +78,90 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
+
+                            Row(
+                                modifier= Modifier
+                                    .fillMaxSize()
+                                    .padding(5.dp),
+                                horizontalArrangement  =  Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "Best Destination",
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "View All >",
+                                    color = Color.Blue
+                                )
+
+                            }
+
+
                         }
-                        
+
+                        item{
+                            LazyRow {
+                                items(destinations) { destinations ->
+                                    Card(
+                                        modifier = Modifier
+                                            .padding(5.dp)
+                                            .wrapContentSize()
+
+
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .padding(5.dp)
+
+                                        )
+                                        {
+                                            Column() {
+                                                Image(
+                                                    painter = painterResource(id = destinations.image),
+                                                    contentDescription = null
+                                                )
+                                                Row(
+                                                ) {
+
+                                                    Text(text = destinations.name)
+                                                    Row(
+                                                        modifier=Modifier.fillMaxSize(),
+                                                        horizontalArrangement = Arrangement.SpaceBetween
+                                                    ) {
+                                                        Icon(
+                                                            modifier=Modifier.size(18.dp),
+                                                            tint =Color.Magenta,
+                                                            imageVector = destinations.rating,
+                                                            contentDescription =null,
+                                                        )
+                                                        Text(text = "4.9")
+
+                                                    }
+
+
+
+                                                }
+
+
+                                                Row() {
+                                                    Icon(
+                                                        imageVector = destinations.locationIcon,
+                                                        contentDescription =null
+                                                    )
+                                                    Text(
+                                                        text = destinations.location
+                                                    )
+                                            }
+
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
 
                     }
 
@@ -93,12 +181,18 @@ class MainActivity : ComponentActivity() {
             elevation = 0.dp,
             title = {
                 Image(
+                    modifier= Modifier
+                        .clip(CircleShape)
+                        .background(Color.Cyan),
                     imageVector = Icons.Default.Person,
                     contentDescription = null
                 )
             },
             actions = {
                 Icon(
+                    modifier= Modifier
+                        .clip(CircleShape)
+                        .background(Color.Cyan),
                     imageVector = Icons.Default.Notifications,
                     contentDescription = null
                 )
@@ -156,47 +250,74 @@ val mountains= listOf(
 data class BestDestinations(
     val image: Int,
     val name: String,
-    val rating: Float,
+    val rating: ImageVector,
     val location: String,
     val locationIcon: ImageVector
 )
 val destinations= listOf(
     BestDestinations(
-        image=R.drawable.kenya,
-        name = "number one",
-        rating = 90.45f,
+        image=R.drawable.jakata,
+        name = "Jakarta",
+        rating = Icons.Default.Star,
         locationIcon = Icons.Default.LocationOn,
-        location = "Kibabii"
+        location = "Jakarta, Indonesia"
     ),
     BestDestinations(
-        image=R.drawable.kenya,
-        name = "number Two",
-        rating = 90.45f,
+        image=R.drawable.paris,
+        name = "Paris",
+        rating = Icons.Default.Star,
         locationIcon = Icons.Default.LocationOn,
-        location = "Kanduyi"
+        location = "Paris, France"
     ),
     BestDestinations(
-        image=R.drawable.kenya,
-        name = "number Three",
-        rating = 90.45f,
+        image=R.drawable.thailand,
+        name = "Bangkok",
+        rating = Icons.Default.Star,
         locationIcon = Icons.Default.LocationOn,
-        location = "Mayanja"
+        location = "Bangkok, Thailand"
     ),
     BestDestinations(
-        image=R.drawable.kenya,
-        name = "Number Four",
-        rating = 90.45f,
+        image=R.drawable.indonesia,
+        name = "Indonesia",
+        rating = Icons.Default.Star,
         locationIcon = Icons.Default.LocationOn,
-        location = "Tuuti"
+        location = "Indonesia,Indonesia"
     ),
     BestDestinations(
-        image=R.drawable.kenya,
-        name = "Number Five",
-        rating = 90.45f,
+        image=R.drawable.china1,
+        name = "China",
+        rating = Icons.Default.Star,
         locationIcon = Icons.Default.LocationOn,
-        location = "Namaloko"
+        location = "HongKong, China"
+    ),
+    BestDestinations(
+        image=R.drawable.thailand1,
+        name = "Thailand",
+        rating = Icons.Default.Star,
+        locationIcon = Icons.Default.LocationOn,
+        location = "Thailand, Thailand"
+),
+    BestDestinations(
+        image=R.drawable.china,
+        name = "China",
+        rating = Icons.Default.Star,
+        locationIcon = Icons.Default.LocationOn,
+        location = "Beijing, China"
+    ),
+    BestDestinations(
+        image=R.drawable.canada,
+        name = "Canada",
+        rating = Icons.Default.Star,
+        locationIcon = Icons.Default.LocationOn,
+        location = "Canada,Canada"
+            ),
+    BestDestinations(
+        image=R.drawable.mai,
+        name = "Chiang Mai",
+        rating = Icons.Default.Star,
+        locationIcon = Icons.Default.LocationOn,
+        location = "ChiangMai, Thailand"
     )
 )
-
 
 
